@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+set -x
+
 readonly HOSTNAME=$(hostname -f)
 
 readonly ERLANGCOOKIEFILE="${EJABBERD_ROOT}/.erlang.cookie"
@@ -93,15 +95,19 @@ make_domain_snakeoil_certificate() {
 
 
 make_config() {
+    file_exist ${CONFIGFILE} || (
     echo "Generating ejabberd config file..."
     cat ${CONFIGTEMPLATE} \
       | python -c "${PYTHON_JINJA2}" \
       > ${CONFIGFILE}
+    )
 
+    file_exist ${CTLCONFIGFILE} || (
     echo "Generating ejabberdctl config file..."
     cat ${CTLCONFIGTEMPLATE} \
       | python -c "${PYTHON_JINJA2}" \
       > ${CTLCONFIGFILE}
+    )
 }
 
 

@@ -85,7 +85,10 @@ log_rate_limit: 100
 ##   - "example.org"
 ##
 hosts:
-  - "{{ env['XMPP_DOMAIN'] or "localhost" }}"
+  - "{{ env['XMPP_DOMAIN1'] or "localhost" }}"
+  - "{{ env['XMPP_DOMAIN2'] }}"
+  - "{{ env['XMPP_DOMAIN3'] }}"
+  - "{{ env['XMPP_DOMAIN4'] }}"
 
 ##
 ## route_subdomains: Delegate subdomains to other XMPP servers.
@@ -123,7 +126,7 @@ listen:
     ## protocol_options:
     ##   - "no_sslv3"
     ##   - "no_tlsv1"
-    certfile: "/opt/ejabberd/ssl/xmpp_domain.pem"
+    certfile: "/opt/ejabberd/ssl/host.pem"
     starttls: true
     max_stanza_size: 65536
     shaper: c2s_shaper
@@ -199,6 +202,15 @@ s2s_certfile: "/opt/ejabberd/ssl/host.pem"
 ##     domain_certfile: "/path/to/example_org.pem"
 ##   "example.com":
 ##     domain_certfile: "/path/to/example_com.pem"
+host_config: 
+  "chat.lamolabs.org": 
+    domain_certfile: "/opt/ejabberd/ssl/selfsigned_chat.lamolabs.org.pem" 
+  "chat.lamotech.com": 
+    domain_certfile: "/opt/ejabberd/ssl/selfsigned_chat.lamotech.com.pem" 
+  "chat.dewlabz.com": 
+    domain_certfile: "/opt/ejabberd/ssl/selfsigned_chat.dewlabz.com.pem" 
+  "chat.qm.dewlabz.com": 
+    domain_certfile: "/opt/ejabberd/ssl/selfsigned_chat.qm.dewlabz.com.pem" 
 
 ##
 ## S2S whitelist or blacklist
@@ -400,7 +412,7 @@ acl:
   ##
   admin:
     user:
-      - "admin": "{{ env['XMPP_DOMAIN'] or "localhost" }}"
+      - "admin": "{{ env['XMPP_DOMAIN1'] or "localhost" }}"
   ##     - "ermine": "example.org"
   ##
   ## Blocked users
